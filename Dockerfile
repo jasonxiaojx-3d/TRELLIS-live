@@ -62,9 +62,10 @@ RUN git clone --recurse-submodules https://github.com/jasonxiaojx-3d/TRELLIS-liv
 WORKDIR /app/TRELLIS
 
 # Install Miniconda
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh && \
-    bash miniconda.sh -b -p /opt/conda && \
-    rm miniconda.sh
+RUN mkdir -p ~/miniconda3
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+RUN bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+RUN rm ~/miniconda3/miniconda.sh
 ENV PATH=/opt/conda/bin:$PATH
 
 # Initialize conda for shell interaction
