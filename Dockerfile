@@ -54,10 +54,10 @@ RUN apt-get update && apt-get install -y \
     
 # Copy and install requirements
 RUN git clone https://github.com/jasonxiaojx-3d/TRELLIS-live.git 
-
+RUN echo ls
 WORKDIR /TRELLIS-live
 
-RUN . setup.sh
+RUN . /TRELLIS-live/setup.sh
 # # Copy your handler code
 # COPY src/handler.py .
 
