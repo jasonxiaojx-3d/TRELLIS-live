@@ -58,7 +58,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Clone TRELLIS repository
-RUN git clone --recurse-submodules https://github.com/jasonxiaojx/TRELLIS-live.git
+RUN git clone --recurse-submodules https://github.com/jasonxiaojx-3d/TRELLIS-live.git
 WORKDIR /app/TRELLIS
 
 # Install Miniconda
