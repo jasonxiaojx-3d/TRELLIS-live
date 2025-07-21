@@ -57,7 +57,7 @@ RUN git clone https://github.com/jasonxiaojx-3d/TRELLIS-live.git
 RUN echo ls
 WORKDIR /TRELLIS-live
 
-RUN . /TRELLIS-live/setup.sh
+RUN . /TRELLIS-live/setup.sh --new-env --basic --xformers --flash-attn --diffoctreerast --spconv --mipgaussian --kaolin --nvdiffrast
 # # Copy your handler code
 # COPY src/handler.py .
 
