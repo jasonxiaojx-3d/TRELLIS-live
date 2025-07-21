@@ -60,7 +60,7 @@ RUN apt-get update && apt-get install -y \
 
 # Clone TRELLIS repository
 RUN git clone --recurse-submodules https://github.com/jasonxiaojx-3d/TRELLIS-live.git
-WORKDIR /app/TRELLIS
+WORKDIR /app/TRELLIS-live
 
 # Install Miniconda
 # RUN mkdir -p /opt/miniconda && \
