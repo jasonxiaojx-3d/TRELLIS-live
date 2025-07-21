@@ -58,7 +58,7 @@ RUN cd TRELLIS-live
 RUN ls 
 WORKDIR /TRELLIS-live
 
-RUN . ./setup.sh --new-env --basic --xformers --flash-attn --diffoctreerast --spconv --mipgaussian --kaolin --nvdiffrast
+RUN chmod +x setup.sh && ./setup.sh --new-env --basic --xformers --flash-attn --diffoctreerast --spconv --mipgaussian --kaolin --nvdiffrast
 # # Copy your handler code
 # COPY src/handler.py .
 
