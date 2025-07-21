@@ -53,9 +53,11 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
     
 # Copy and install requirements
-COPY builder/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN git clone https://github.com/jasonxiaojx-3d/TRELLIS-live.git 
 
+WORKDIR /TRELLIS-live
+
+RUN . setup.sh
 # # Copy your handler code
 # COPY src/handler.py .
 
