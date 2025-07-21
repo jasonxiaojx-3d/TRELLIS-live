@@ -62,6 +62,8 @@ RUN apt-get update && apt-get install -y \
 RUN git clone --recurse-submodules https://github.com/jasonxiaojx-3d/TRELLIS-live.git
 WORKDIR /app/TRELLIS-live
 
+RUN pip install --upgrade pip
+RUN pip install conda
 # Install Miniconda
 # RUN mkdir -p /opt/miniconda && \
 #     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /opt/miniconda/miniconda.sh && \
@@ -177,7 +179,7 @@ ENV PYTHONPATH=/app/TRELLIS
 ENV DISPLAY=:99
 
 # First, we need to modify app.py to use the correct launch parameters
-RUN sed -i 's/demo.launch()/demo.launch(server_name="0.0.0.0")/' /app/TRELLIS/app.py
+# RUN sed -i 's/demo.launch()/demo.launch(server_name="0.0.0.0")/' /app/TRELLIS/app.py
 
 # Enable this if you want to share the web interface externally (or change /app/TRELLIS/app.py manually)
 #RUN sed -i 's/demo.launch(server_name="0.0.0.0")/demo.launch(server_name="0.0.0.0", share=True)/' /app/TRELLIS/app.py
