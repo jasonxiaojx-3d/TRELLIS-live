@@ -62,16 +62,17 @@ RUN apt-get update && apt-get install -y \
 RUN git clone --recurse-submodules https://github.com/jasonxiaojx-3d/TRELLIS-live.git
 WORKDIR /app/TRELLIS-live
 
-RUN pip install --upgrade pip
-RUN pip install conda
+RUN pip install --upgrade pip && \
+    python3 -m venv /workspace/myenv && \
+    /bin/bash -c "source /workspace/myenv/bin/activate && cd /workspace"
 # Install Miniconda
-# RUN mkdir -p /opt/miniconda && \
-#     wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /opt/miniconda/miniconda.sh && \
-#     chmod +x /opt/miniconda/miniconda.sh && \
-#     /opt/miniconda/miniconda.sh -b -p /opt/miniconda && \
-#     rm /opt/miniconda/miniconda.sh
+RUN mkdir -p /opt/miniconda && \
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /opt/miniconda/miniconda.sh && \
+    chmod +x /opt/miniconda/miniconda.sh && \
+    /opt/miniconda/miniconda.sh -b -p /opt/miniconda && \
+    rm /opt/miniconda/miniconda.sh
 
-# ENV PATH=/opt/miniconda/bin:$PATH
+ENV PATH=/opt/miniconda/bin:$PATH
 
 # Run setup script with required flags and demo dependencies
 RUN chmod +x setup.sh && \
