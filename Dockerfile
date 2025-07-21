@@ -61,7 +61,7 @@ RUN apt-get update && apt-get install -y \
 # Clone TRELLIS repository
 RUN git clone --recurse-submodules https://github.com/jasonxiaojx-3d/TRELLIS-live.git
 WORKDIR /app/TRELLIS-live
-
+RUN apt install python3.10-venv
 RUN pip install --upgrade pip && \
     python3 -m venv /workspace/myenv && \
     /bin/bash -c "source /workspace/myenv/bin/activate && cd /workspace"
