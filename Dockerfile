@@ -36,6 +36,22 @@ FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
 
 WORKDIR /
 
+RUN apt-get update && apt-get install -y \
+    git \
+    python3-pip \
+    python3-dev \
+    build-essential \
+    wget \
+    cmake \
+    libgl1-mesa-glx \
+    xvfb \
+    libxml2-dev \
+    zlib1g-dev \
+    ninja-build \
+    nano \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
+    
 # Copy and install requirements
 COPY builder/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
