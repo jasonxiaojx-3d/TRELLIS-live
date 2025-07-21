@@ -1,5 +1,6 @@
 from typing import *
 import torch
+import time
 import numpy as np
 from tqdm import tqdm
 from easydict import EasyDict as edict
@@ -36,10 +37,13 @@ class FlowEulerSampler(Sampler):
         return x_0, eps
 
     def _inference_model(self, model, x_t, t, cond=None, **kwargs):
-        t = torch.tensor([1000 * t] * x_t.shape[0], device=x_t.device, dtype=torch.float32)
+        t = torch.tensor([1000 * t] * x_t.shape[0], device=x_t.device, dtype=torch.float16)
         if cond is not None and cond.shape[0] == 1 and x_t.shape[0] > 1:
             cond = cond.repeat(x_t.shape[0], *([1] * (len(cond.shape) - 1)))
-        return model(x_t, t, cond, **kwargs)
+        with torch.jit.optimized_execution(True):
+            with torch.no_grad():
+                output = model(x_t, t, cond, **kwargs)
+        return output
 
     def _get_model_prediction(self, model, x_t, t, cond=None, **kwargs):
         pred_v = self._inference_model(model, x_t, t, cond, **kwargs)
@@ -110,11 +114,17 @@ class FlowEulerSampler(Sampler):
         t_seq = rescale_t * t_seq / (1 + (rescale_t - 1) * t_seq)
         t_pairs = list((t_seq[i], t_seq[i + 1]) for i in range(steps))
         ret = edict({"samples": None, "pred_x_t": [], "pred_x_0": []})
+        latency = []
         for t, t_prev in tqdm(t_pairs, desc="Sampling", disable=not verbose):
+            start_time = time.time()
             out = self.sample_once(model, sample, t, t_prev, cond, **kwargs)
             sample = out.pred_x_prev
             ret.pred_x_t.append(out.pred_x_prev)
             ret.pred_x_0.append(out.pred_x_0)
+            latency.append(time.time() - start_time)
+        print(f"Average latency: {np.mean(latency)} seconds")
+        print(f"Minimum latency: {np.min(latency)} seconds")
+        print(f"Maximum latency: {np.max(latency)} seconds")
         ret.samples = sample
         return ret
 

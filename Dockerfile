@@ -34,17 +34,32 @@
 
 FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
 
-# Set default CUDA architecture to 8.9 (RTX 4090)
-ENV TORCH_CUDA_ARCH_LIST="8.9+PTX"
+# Set default CUDA architecture to 8.0 (A100)
+ENV TORCH_CUDA_ARCH_LIST="8.0"
 
 # Set working directory
 WORKDIR /app
 
-COPY requirements.txt /app/requirements.txt
-RUN pip install -r /app/requirements.txt
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    python3-pip \
+    python3-dev \
+    build-essential \
+    wget \
+    cmake \
+    libgl1-mesa-glx \
+    xvfb \
+    libxml2-dev \
+    zlib1g-dev \
+    ninja-build \
+    nano \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy local TRELLIS files into the container
-COPY . /app/TRELLIS
+# Clone TRELLIS repository
+RUN git clone --recurse-submodules https://github.com/jasonxiaojx/TRELLIS-live.git
+WORKDIR /app/TRELLIS
 
 # Install Miniconda
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh && \
@@ -56,9 +71,9 @@ ENV PATH=/opt/conda/bin:$PATH
 RUN conda init bash
 
 # Run setup script with required flags and demo dependencies
-RUN chmod +x /app/TRELLIS/setup.sh && \
-    /app/TRELLIS/setup.sh --new-env --basic --xformers --flash-attn --diffoctreerast --spconv --mipgaussian --kaolin --nvdiffrast && \
-    /app/TRELLIS/setup.sh --demo
+RUN chmod +x setup.sh && \
+    ./setup.sh --new-env --basic --xformers --flash-attn --diffoctreerast --spconv --mipgaussian --kaolin --nvdiffrast && \
+    ./setup.sh --demo
 
 # Set conda environment activation in PATH
 ENV PATH=/opt/conda/envs/trellis/bin:$PATH
