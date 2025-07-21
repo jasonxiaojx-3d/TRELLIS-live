@@ -53,11 +53,12 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
     
 # Copy and install requirements
-RUN git clone https://github.com/jasonxiaojx-3d/TRELLIS-live.git 
-RUN echo ls
+RUN git clone --recurse-submodules https://github.com/jasonxiaojx-3d/TRELLIS-live.git 
+RUN cd TRELLIS-live
+
 WORKDIR /TRELLIS-live
 
-RUN . /TRELLIS-live/setup.sh --new-env --basic --xformers --flash-attn --diffoctreerast --spconv --mipgaussian --kaolin --nvdiffrast
+RUN . ./setup.sh --new-env --basic --xformers --flash-attn --diffoctreerast --spconv --mipgaussian --kaolin --nvdiffrast
 # # Copy your handler code
 # COPY src/handler.py .
 
