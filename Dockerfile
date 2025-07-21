@@ -55,7 +55,7 @@ RUN apt-get update && apt-get install -y \
 # Copy and install requirements
 RUN git clone --recurse-submodules https://github.com/jasonxiaojx-3d/TRELLIS-live.git 
 RUN cd TRELLIS-live
-
+RUN ls 
 WORKDIR /TRELLIS-live
 
 RUN . ./setup.sh --new-env --basic --xformers --flash-attn --diffoctreerast --spconv --mipgaussian --kaolin --nvdiffrast
