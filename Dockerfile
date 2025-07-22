@@ -50,8 +50,17 @@ RUN apt-get update && apt-get install -y \
     ninja-build \
     nano \
     vim \
+    openssh-server \
+    ngrok \
+    nginx \
     && rm -rf /var/lib/apt/lists/*
-    
+
+# To allow SSH login without a password, enable empty passwords and disable password authentication.
+# Note: This configuration is insecure and should only be used in a controlled environment.
+
+RUN sed -i 's/#PermitEmptyPasswords no/PermitEmptyPasswords yes/' /etc/ssh/sshd_config && \
+    sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+
 # Copy and install requirements
 RUN git clone --recurse-submodules https://github.com/jasonxiaojx-3d/TRELLIS-live.git 
 RUN cd TRELLIS-live
