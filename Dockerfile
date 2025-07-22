@@ -51,8 +51,6 @@ RUN apt-get update && apt-get install -y \
     nano \
     vim \
     openssh-server \
-    ngrok \
-    nginx \
     && rm -rf /var/lib/apt/lists/*
 
 # To allow SSH login without a password, enable empty passwords and disable password authentication.
