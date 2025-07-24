@@ -59,33 +59,31 @@ RUN wget https://bootstrap.pypa.io/get-pip.py && python3.9 get-pip.py && rm get-
 RUN git clone --recurse-submodules https://github.com/jasonxiaojx-3d/TRELLIS-live.git 
 WORKDIR /TRELLIS-live
 
-RUN pip install --no-cache-dir runpod \
-    torch==2.4.0 torchvision==0.19.0 torchaudio==2.4.0 --index-url https://download.pytorch.org/whl/cu124 \
-    sympy==1.13.1 \
-    fsspec \
-    pillow imageio imageio-ffmpeg tqdm easydict opencv-python-headless scipy ninja rembg onnxruntime trimesh open3d xatlas pyvista pymeshfix igraph transformers \
-    git+https://github.com/EasternJournalist/utils3d.git@9a4eb15e4021b67b12c460c7057d642626897ec8 \
-    tensorboard pandas lpips \
-    pillow-simd \
-    xformers==0.0.28.post2 --index-url https://download.pytorch.org/whl/cu124 \
-    flash-attn \
-    kaolin==0.17.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.5.0_cu124.html \
-    spconv-cu124 \
-    gradio==4.44.1 gradio_litmodel3d==0.0.1 && \
-    pip uninstall -y pillow && \
-    mkdir -p /tmp/extensions && \
-    git clone https://github.com/NVlabs/nvdiffrast.git /tmp/extensions/nvdiffrast && \
-    pip install /tmp/extensions/nvdiffrast && \
-    git clone --recurse-submodules https://github.com/JeffreyXiang/diffoctreerast.git /tmp/extensions/diffoctreerast && \
-    pip install /tmp/extensions/diffoctreerast && \
-    git clone https://github.com/autonomousvision/mip-splatting.git /tmp/extensions/mip-splatting && \
-    pip install /tmp/extensions/mip-splatting/submodules/diff-gaussian-rasterization/ && \
-    cp -r extensions/vox2seq /tmp/extensions/vox2seq && \
-    pip install /tmp/extensions/vox2seq && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# COPY rp_handler.py /TRELLIS-live
+RUN pip install --no-cache-dir runpod
+RUN pip install torch==2.4.0 torchvision==0.19.0 torchaudio==2.4.0 --index-url https://download.pytorch.org/whl/cu124
+RUN pip install sympy==1.13.1
+RUN pip install fsspec
+RUN pip install pillow imageio imageio-ffmpeg tqdm easydict opencv-python-headless scipy ninja rembg onnxruntime trimesh open3d xatlas pyvista pymeshfix igraph transformers
+RUN pip install git+https://github.com/EasternJournalist/utils3d.git@9a4eb15e4021b67b12c460c7057d642626897ec8
+RUN pip install tensorboard pandas lpips
+RUN pip uninstall -y pillow
+RUN pip install pillow-simd
+RUN pip install xformers==0.0.28.post2 --index-url https://download.pytorch.org/whl/cu124
+RUN pip install flash-attn
+RUN pip install kaolin==0.17.0 -f https://nvidia-kaolin.s3.us-east-2.amazonaws.com/torch-2.5.0_cu124.html
+RUN pip install spconv-cu124
+RUN pip install gradio==4.44.1 gradio_litmodel3d==0.0.1
+RUN mkdir -p /tmp/extensions
+RUN git clone https://github.com/NVlabs/nvdiffrast.git /tmp/extensions/nvdiffrast
+RUN pip install /tmp/extensions/nvdiffrast
+RUN mkdir -p /tmp/extensions
+RUN git clone --recurse-submodules https://github.com/JeffreyXiang/diffoctreerast.git /tmp/extensions/diffoctreerast
+RUN pip install /tmp/extensions/diffoctreerast
+RUN mkdir -p /tmp/extensions
+RUN git clone https://github.com/autonomousvision/mip-splatting.git /tmp/extensions/mip-splatting
+RUN pip install /tmp/extensions/mip-splatting/submodules/diff-gaussian-rasterization/
+RUN cp -r extensions/vox2seq /tmp/extensions/vox2seq
+RUN pip install /tmp/extensions/vox2seq
 
 # RUN chmod +x setup.sh && ./setup.sh --new-env --basic --xformers --flash-attn --diffoctreerast --spconv --mipgaussian --kaolin --nvdiffrast
 # Copy your handler code
