@@ -1,9 +1,9 @@
 print("jasonxiao: begin importing runpod")
 import runpod
 import time
-print("jasonxiao: begin importing os")
 import os
-print("jasonxiao: begin importing trellis required items")
+import logging
+logging.info("jasonxiao: begin importing trellis required items")
 # os.environ['ATTN_BACKEND'] = 'xformers'   # Can be 'flash-attn' or 'xformers', default is 'flash-attn'
 os.environ['SPCONV_ALGO'] = 'native'        # Can be 'native' or 'auto', default is 'auto'.
                                             # 'auto' is faster but will do benchmarking at the beginning.
@@ -13,7 +13,7 @@ import imageio
 from PIL import Image
 from trellis.pipelines import TrellisImageTo3DPipeline
 from trellis.utils import render_utils, postprocessing_utils
-print("jasonxiao: trellis required items imported")
+logging.info("jasonxiao: trellis required items imported")
 print("jasonxiao: begin loading trellis pipeline")
 # Load a pipeline from a model folder or a Hugging Face model hub.
 # pipeline = TrellisImageTo3DPipeline.from_pretrained("microsoft/TRELLIS-image-large")
