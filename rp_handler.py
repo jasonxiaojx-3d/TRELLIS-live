@@ -1,5 +1,7 @@
+print("jasonxiao: begin importing runpod")
 import runpod
 import time
+print("jasonxiao: begin importing os")
 import os
 print("jasonxiao: begin importing trellis required items")
 # os.environ['ATTN_BACKEND'] = 'xformers'   # Can be 'flash-attn' or 'xformers', default is 'flash-attn'
