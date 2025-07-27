@@ -3,11 +3,12 @@ import runpod
 import time
 import os
 import logging
-logging.info("jasonxiao: begin importing trellis required items")
-os.environ['ATTN_BACKEND'] = 'sdpa'   # Can be 'flash-attn' or 'xformers', default is 'flash-attn'
-os.environ['SPCONV_ALGO'] = 'native'        # Can be 'native' or 'auto', default is 'auto'.
-                                            # 'auto' is faster but will do benchmarking at the beginning.
-                                            # Recommended to set to 'native' if run only once.
+logging.info("jasonxiao: begin importing trellis required items, check ENV variables")
+logging.info("ATTN_BACKEND: " + os.environ['ATTN_BACKEND'])
+# os.environ['ATTN_BACKEND'] = 'sdpa'   # Can be 'flash-attn' or 'xformers', default is 'flash-attn'
+# os.environ['SPCONV_ALGO'] = 'native'        # Can be 'native' or 'auto', default is 'auto'.
+#                                             # 'auto' is faster but will do benchmarking at the beginning.
+#                                             # Recommended to set to 'native' if run only once.
 
 import imageio
 from PIL import Image

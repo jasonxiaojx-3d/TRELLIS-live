@@ -89,7 +89,10 @@ RUN pip install /tmp/extensions/vox2seq
 # build using this command to bypass cache for singular files: docker build --build-arg RP_HANDLER_CHECKSUM=$(md5sum rp_handler.py | awk '{ print $1 }')  . -t jasonxiaojx/trellis-serverless --platform linux/amd64 && docker push jasonxiaojx/trellis-serverless
 ARG RP_HANDLER_CHECKSUM
 
+COPY rp_handler.py /TRELLIS-live
 RUN chmod +x rp_handler.py
+ENV ATTN_BACKEND = 'sdpa'  
+ENV SPCONV_ALGO  = 'native'    
 
 # Command to run when the container starts
 CMD ["python3", "-u", "rp_handler.py"]
