@@ -86,7 +86,9 @@ RUN cp -r extensions/vox2seq /tmp/extensions/vox2seq
 RUN pip install /tmp/extensions/vox2seq
 
 # RUN chmod +x setup.sh && ./setup.sh --new-env --basic --xformers --flash-attn --diffoctreerast --spconv --mipgaussian --kaolin --nvdiffrast
-# Copy your handler code
+# build using this command to bypass cache for singular files: docker build --build-arg RP_HANDLER_CHECKSUM=$(md5sum rp_handler.py | awk '{ print $1 }')  . -t jasonxiaojx/trellis-serverless --platform linux/amd64 && docker push jasonxiaojx/trellis-serverless
+ARG RP_HANDLER_CHECKSUM
+
 RUN chmod +x rp_handler.py
 
 # Command to run when the container starts
