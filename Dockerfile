@@ -91,8 +91,8 @@ ARG RP_HANDLER_CHECKSUM
 
 COPY rp_handler.py /TRELLIS-live
 RUN chmod +x rp_handler.py
-ENV ATTN_BACKEND = 'sdpa'  
-ENV SPCONV_ALGO  = 'native'    
+ENV ATTN_BACKEND='sdpa'  
+ENV SPCONV_ALGO='native'    
 
 # Command to run when the container starts
 CMD ["python3", "-u", "rp_handler.py"]
